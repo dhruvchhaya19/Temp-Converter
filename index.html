@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Temperature Converter</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+	background-image: url('back.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;  
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.container {
+    background-color: white;
+    width: 510px;
+    padding: 5px 25px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+.container h1 {
+    font-family: 'Lobster', cursive;
+    font-size: 33px;
+    font-weight: 700;
+    text-align: center;
+    user-select: none;
+    letter-spacing: 1px;
+}
+.con {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    padding: 2px 0 0 0;
+}
+#p1 {
+    font-family: system-ui;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inputs:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.choice {
+    display: flex;
+    gap: 10px;
+}
+
+.choice div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+#result,
+#temp {
+    height: 40px;
+    font-size: 25px;
+    border: 1px solid gray;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    outline: none;
+    padding: 0 10px;
+    font-weight: 600;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#from,
+#to {
+    height: 41px;
+    font-size: 20px;
+    border: 1px solid gray;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    outline: none;
+    padding: 0 10px;
+}
+#btn {
+    height: 45px;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width:100%;
+    margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#btn:active {
+    height: 45px;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: rgb(60, 60, 65);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+label {
+    font-size: 17px;
+    font-family: -webkit-pictograph;
+    color: gray;
+}
+
+.container .results {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+
+
+
+.resultss {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+<div class="container">
+	<form>
+	<div class="con">
+            <div id="p1"></div>
+            <div class="icons">
+                <i class="bi bi-bell-slash-fill"></i>
+                <i class="bi bi-bluetooth"></i>
+                <i class="bi bi-battery-charging"></i>
+            </div>
+        </div>
+	<h1>Temperature Converter</h1>
+<div class="inputs">
+	    <div style="display: flex;flex-direction: column;">
+		<label for="temp">Enter</label>
+		<input type="number" id="temp" name="temp" required>
+        </div>
+      <div class="choice">
+		<div>
+		<label for="from">From:</label>
+		<select id="from" name="from">
+			<option value="celsius">Celsius</option>
+			<option value="fahrenheit">Fahrenheit</option>
+			<option value="kelvin">Kelvin</option>
+		</select>
+		</div>
+
+
+		<div>
+		<label for="to">To:</label>
+		<select id="to" name="to">
+			<option value="celsius">Celsius</option>
+			<option value="fahrenheit">Fahrenheit</option>
+			<option value="kelvin">Kelvin</option>
+		</select>
+	    </div>
+	  </div>
+</div>	
+<button type="submit" id="btn" >Convert</button>
+
+        
+<div class="resultss">
+	<div id="result"></div>
+</div>
+
+
+</form>
+</div>
+
+	<script>
+
+
+function currentTime() {
+    let p1 = document.getElementById("p1")
+    let date = new Date();
+    let hr = date.getHours();
+    let mn = date.getMinutes();
+    let ss = date.getSeconds();
+    let current_time = hr + ":" + mn + ":" + ss;
+    p1.innerHTML = current_time;
+    let t = setTimeout(function () { currentTime() }, 1000);
+}
+currentTime();
+
+
+
+
+
+
+
+
+
+document.querySelector("form").addEventListener("submit", function(event) {
+	event.preventDefault();
+	convert();
+});
+
+
+function convert() {
+	let temp = document.getElementById("temp").value;
+	let from = document.getElementById("from").value;
+	let to = document.getElementById("to").value;
+
+	if (from === "celsius") {
+		if (to === "fahrenheit") {
+			temp = temp * 9/5 + 32;
+		} else if (to === "kelvin") {
+			temp = parseFloat(temp) + 273.15;
+		}
+	} else if (from === "fahrenheit") {
+		if (to === "celsius") {
+			temp = (temp - 32) * 5/9;
+		} else if (to === "kelvin") {
+			temp = (temp - 32) * 5/9 + 273.15;
+		}
+	} else if (from === "kelvin") {
+		if (to === "celsius") {
+			temp = parseFloat(temp) - 273.15;
+		} else if (to === "fahrenheit") {
+			temp = (temp - 273.15) * 9/5 + 32;
+		}
+	}
+    
+     if(to==from)
+	 {
+		let t=document.getElementById("temp").value
+		if(to === "fahrenheit")
+		document.getElementById("result").innerHTML = t+ " F";
+     else if(to === "kelvin")
+	    document.getElementById("result").innerHTML = t+ " K";
+	 else
+	    document.getElementById("result").innerHTML = t+` &deg;C`;
+	 }
+     if(to === "fahrenheit")
+		document.getElementById("result").innerHTML = temp.toFixed(2)+ " F";
+     else if(to === "kelvin")
+	    document.getElementById("result").innerHTML = temp.toFixed(2)+ " K";
+	 else
+	    document.getElementById("result").innerHTML = temp.toFixed(2)+` &deg;C`;
+
+
+}
+
+
+
+
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
